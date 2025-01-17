@@ -1,0 +1,69 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content_checkout %}
+<div class="row" style="width: 100%">
+    <div class="col-lg-8">
+        <div class="box-element">
+            <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+            <hr />
+            <h3 style="text-align: center">Order Summary</h3>
+            <div class="cart-row">
+                <div style="flex: 2"></div>
+                <div style="flex: 2"><p>Product</p></div>
+                <div style="flex: 1"><p>Price</p></div>
+                <div style="flex: 1"><p>Amount</p></div>
+            </div>
+            {% for item in items %}
+            <div class="cart-row">
+                <div style="flex: 2"><img class="row-image" src="{{item.product.ImageURL}}" /></div>
+                <div style="flex: 2"><p>{{item.product.name}}</p></div>
+                <div style="flex: 1"><p>${{item.product.price | floatformat:2}}</p></div>
+                <div style="flex: 1"><p>x{{item.quantity}}</p></div>
+            </div>
+            {% endfor %}
+            <h5>Items: {{order.getNumberOfProducts}}</h5>
+            <h5>Total: ${{order.getTotalAmount | floatformat:2}}</h5>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="box-element" id="form-wrapper" style="text-align: right">
+            <form id="form">
+                <div id="user-info">
+                    <div class="form-field" style="width: 100%">
+                        <input required class="form-control" type="text" name="name" placeholder="Name.." />
+                    </div>
+                    <div class="form-field" style="width: 100%">
+                        <input required class="form-control" type="email" name="email" placeholder="Email.." />
+                    </div>
+                </div>
+                <div id="shipping-info">
+                    <hr />
+                    <p style="text-align: center"><b>Shipping Information:</b></p>
+                    <hr />
+                    <div class="form-field" style="width: 100%">
+                        <input class="form-control" type="text" name="address" placeholder="Address.." />
+                    </div>
+                    <div class="form-field" style="width: 100%">
+                        <input class="form-control" type="text" name="city" placeholder="City.." />
+                    </div>
+                    <div class="form-field" style="width: 100%">
+                        <input class="form-control" type="text" name="state" placeholder="State.." />
+                    </div>
+                    <div class="form-field" style="width: 100%">
+                        <input class="form-control" type="text" name="country" placeholder="Country.." />
+                    </div>
+                    <div class="form-field" style="width: 100%">
+                        <input class="form-control" type="text" name="phonenumber" placeholder="Phone number.." />
+                    </div>
+                </div>
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue" />
+            </form>
+        </div>
+        <br>
+        <div class="box-element hidden" id="payment-info">
+            <small>Paypal Options</small>
+        </div>
+    </div>
+</div>
+{% endblock content_checkout %}
